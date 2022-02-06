@@ -1,0 +1,168 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  background: #d1d1d1;
+  margin: 0;
+  font: 16px sans-serif;
+}
+
+#tudo {
+  background: #fff;
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.menu ul {
+  padding: 0;
+}
+
+.menu li {
+  list-style: none;
+  display: inline;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.menu li:first-child {
+  padding-left: 0;
+}
+
+a,
+a:visited {
+  color: #ff7300;
+}
+
+a:hover {
+  color: #f3974c;
+  text-decoration: none;
+}
+
+.tabela {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin: 20px auto;
+}
+
+.tabela td,
+.tabela th {
+  padding: 6px 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+thead>tr:last-child {
+  text-align: left;
+}
+
+thead>tr:first-child {
+  background: #d1fafd;
+}
+
+tbody>tr:nth-child(2n-1) {
+  background: #f1f1f1;
+}
+
+tfoot>tr {
+  text-align: center;
+  background: #d1fafd;
+}
+
+label[for="ftitulo"] {
+  display: block;
+}
+
+#fisbn,
+#ftitulo,
+#fautor {
+  width: 100%;
+  padding: 4px 10px;
+  font-size: 20px;
+}
+
+.botao {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+  font-size: 16px;
+  line-height: 1.5;
+  border-radius: 6px;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.remover {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.remover:hover {
+  color: #fff;
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.editar {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.editar:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.editar>a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.cadastrar {
+  width: 100%;
+  padding: 6px 20px;
+  color: #fff;
+  background-color: #28a725;
+  border-color: #28a725;
+}
+
+.cadastrar:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+::placeholder {
+  color: red;
+  opacity: 1;
+}
+
+@media all and (max-width: 599px) {
+  #tudo {
+    padding: 0;
+  }
+
+  .tabela {
+    font-size: calc(8px + 1vw);
+  }
+
+  .tabela td {
+    padding: 2px;
+  }
+}

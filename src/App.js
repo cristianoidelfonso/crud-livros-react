@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Menu from "./components/Menu";
 import TableBooks from "./components/TableBooks";
 import CreateBook from './components/CreateBook';
@@ -36,7 +36,18 @@ class App extends Component {
     this.setState({
       livros: [...this.state.livros, livro]
     });
-  }
+  };
+
+  editarLivro = livro => {
+    const index = this.state.livros.findIndex(p => p.id === livro.id);
+    const livros = this.state.livros 
+      .slice(0, index)
+      .concat(this.state.livros.slice(index + 1));
+    const newLivros = [ ...livros, livro].sort((a, b) => a.id - b.id);
+    this.setState({
+      livros: newLivros
+    });
+  };
 
   render() {
     return (
@@ -53,6 +64,27 @@ class App extends Component {
                 livro = {{ id:0, isbn:"", titulo:"", autor:"" }} 
               />
             )} 
+          />
+          <Route
+            exact
+            path="/editar/:isbnLivro"
+            render={ props => {
+                const livro = this.state.livros.find(
+                  livro => livro.isbn === props.match.params.isbnLivro
+                );
+                if(livro){
+                  return(
+                    <CreateBook
+                      editarLivro = { this.editarLivro }
+                      livro = {livro}
+                    />
+                  );
+                }
+                else{
+                  return <Redirect to="/" />
+                }
+              }
+            }
           />
           <Route component={NotFound} />
         </Switch>

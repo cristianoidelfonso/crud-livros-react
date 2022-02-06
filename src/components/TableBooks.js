@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function TableBooks({ livros }) {
   return(
     <div className="livros">
@@ -21,7 +23,9 @@ function TableBooks({ livros }) {
                 <td>{livro.titulo}</td>
                 <td>{livro.autor}</td>
                 <td>
-                  <button className="botao editar">Editar</button>
+                  <button className="botao editar">
+                    <Link to={`/editar/${livro.isbn}`}>Editar</Link>
+                  </button>
                 </td>
                 <td>
                   <button className="botao remover">Remover</button>

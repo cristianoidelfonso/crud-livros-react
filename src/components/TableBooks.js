@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function TableBooks({ livros }) {
+function TableBooks({ livros, removerLivro }) {
   return(
     <div className="livros">
       <h1>Tabela de livros</h1>
@@ -28,7 +28,8 @@ function TableBooks({ livros }) {
                   </button>
                 </td>
                 <td>
-                  <button className="botao remover">Remover</button>
+                  <button 
+                    className="botao remover" onClick={ () => { removerLivro(livro); }}>Remover</button>
                 </td>
               </tr>
             ))}

@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
 import SimpleStorage from 'react-simple-storage';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Menu from "./components/Menu";
+import Header from "./components/Header";
+import TableHome from "./components/TableHome";
 import TableBooks from "./components/TableBooks";
 import CreateBook from './components/CreateBook';
 import NotFound from './components/NotFound';
+import Login from './components/Login';
+
+import firebase from './firebase';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 import './App.css';
+
+// console.log(firebase);
 
 class App extends Component {
 
-  state = { livros:[] }
+  state = { 
+    isAuthenticated: false,
+    livros:[] }
   // state1 = {
   //   livros: [
   //     {
@@ -58,23 +68,59 @@ class App extends Component {
     }
   }
 
+  onLogin = (email, password) => {
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+    //     // Signed in
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('Aqui: ', errorCode, errorMessage);
+    });
+  }
+
+  // onLogin = ( email, password ) => {
+  //   firebase.auth().signInWithEmailAndPassword(email, password)
+  //     .then( ( user ) => {this.setState({ isAuthenticated: true });})
+  //     .catch(( error ) => console.error( error ))
+  // }
+
+  onLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .tehn( () => {
+        this.setState({ isAuthenticated: false });
+      })
+      .catch(( error ) => console.log(error))
+  }
+
+
   render() {
     return (
       <Router>
 
         <SimpleStorage parent = {this} />
 
-        <Menu />
+        <Header 
+          isAuthenticated={this.state.isAuthenticated} 
+          onLogout={this.onLogout}
+        />
         
         <Switch>
+          
           <Route 
             exact 
             path = "/" 
             render={() => 
-              <TableBooks 
-                livros = {this.state.livros}
-                removerLivro = {this.removerLivro}
-              /> 
+              !this.state.isAuthenticated
+              ? ( <TableHome livros = {this.state.livros} /> ) 
+              : ( <TableBooks livros = {this.state.livros} removerLivro = {this.removerLivro}/> ) 
             } 
           />
           <Route 
@@ -87,6 +133,18 @@ class App extends Component {
               />
             )} 
           />
+
+          <Route 
+            exact 
+            path='/login' 
+            render={() => 
+              !this.state.isAuthenticated
+              ? ( <Login onLogin={this.onLogin} /> ) 
+              : ( <Redirect to="/" /> )
+            }
+          
+          />
+          
           <Route
             exact
             path = "/editar/:isbnLivro"

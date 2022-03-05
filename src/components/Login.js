@@ -22,7 +22,7 @@ export default class Login extends Component {
         </p>
         <p>
           <label htmlFor='password'>Password: </label>
-          <input type="password" onChange={(event) => this.setState({ password: event.target.password })} />
+          <input type="password" onChange={(event) => this.setState({ password: event.target.value })} />
         </p>
         <p>
           <button type='submit' disabled={ !this.state.email && !this.state.password }>Login</button>

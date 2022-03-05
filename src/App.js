@@ -8,8 +8,8 @@ import CreateBook from './components/CreateBook';
 import NotFound from './components/NotFound';
 import Login from './components/Login';
 
-import firebase from './firebase';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from './firebase';
 
 import './App.css';
 
@@ -68,35 +68,15 @@ class App extends Component {
     }
   }
 
-  onLogin = (email, password) => {
-
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
-    //     // Signed in
-        const user = userCredential.user;
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log('Aqui: ', errorCode, errorMessage);
-    });
+  onLogin = async (email, password) => {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((user) => { this.setState({ isAuthenticated: true }); })
+      .catch((error) => console.error(error))
   }
 
-  // onLogin = ( email, password ) => {
-  //   firebase.auth().signInWithEmailAndPassword(email, password)
-  //     .then( ( user ) => {this.setState({ isAuthenticated: true });})
-  //     .catch(( error ) => console.error( error ))
-  // }
-
   onLogout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .tehn( () => {
-        this.setState({ isAuthenticated: false });
-      })
+    signOut(auth)
+      .then( () => {this.setState({ isAuthenticated: false });})
       .catch(( error ) => console.log(error))
   }
 
